@@ -41,6 +41,7 @@ Ben Hollander (@benhollander)
 Mehdi Bahrami (@mehdibahraami)
 Reimund Trost (@reimund)
 Ben van Enckevort (@benvan)
+Göksel Küçükşahin (@GokselKUCUKSAHIN)
 
 License
 MIT License

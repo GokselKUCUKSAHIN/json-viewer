@@ -19,6 +19,7 @@ function Highlighter(jsonText, options) {
   this.defaultSearch = false;
   this.theme = this.options.theme || "default";
   this.theme = this.theme.replace(/_/, ' ');
+  
 }
 
 Highlighter.prototype = {
@@ -95,12 +96,10 @@ Highlighter.prototype = {
             linkTag.setAttribute('target', '_blank')
             linkTag.classList.add("cm-string");
 
-            // reparent the child nodes to preserve the cursor when editing
             node.childNodes.forEach(function(child) {
               linkTag.appendChild(child);
             });
 
-            // block CodeMirror's contextmenu handler
             linkTag.addEventListener("contextmenu", function(e) {
               if (e.bubbles) e.cancelBubble = true;
             });
@@ -209,8 +208,6 @@ Highlighter.prototype = {
   },
 
   alwaysRenderAllContent: function() {
-    // "awaysRenderAllContent" was a typo but to avoid any problems
-    // I'll keep it a while
     return this.options.addons.alwaysRenderAllContent ||
            this.options.addons.awaysRenderAllContent;
   },

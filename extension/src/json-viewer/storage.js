@@ -6,20 +6,30 @@ var NAMESPACE = "v2.options";
 
 module.exports = {
   save: function(obj) {
-    localStorage.setItem(NAMESPACE, JSON.stringify(obj));
+    return new Promise(function(resolve) {
+      chrome.storage.local.set({ [NAMESPACE]: obj }, function() {
+        resolve();
+      });
+    });
   },
 
   load: function() {
-    var optionsStr = localStorage.getItem(NAMESPACE);
-    optionsStr = this.restoreOldOptions(optionsStr);
-
-    options = optionsStr ? JSON.parse(optionsStr) : {};
-    options.theme = options.theme || defaults.theme;
-    options.addons = options.addons ? JSON.parse(options.addons) : {};
-    options.addons = merge({}, defaults.addons, options.addons)
-    options.structure = options.structure ? JSON.parse(options.structure) : defaults.structure;
-    options.style = options.style && options.style.length > 0 ? options.style : defaults.style;
-    return options;
+    return new Promise(function(resolve) {
+      chrome.storage.local.get(NAMESPACE, function(result) {
+        var options = result[NAMESPACE] || {};
+        options.theme = options.theme || defaults.theme;
+        if (typeof options.addons !== 'object') {
+          options.addons = {};
+        }
+        options.addons = merge({}, defaults.addons, options.addons);
+        if (typeof options.structure !== 'object') {
+          options.structure = {};
+        }
+        options.structure = merge({}, defaults.structure, options.structure);
+        options.style = options.style || defaults.style;
+        resolve(options);
+      });
+    });
   },
 
   restoreOldOptions: function(optionsStr) {
@@ -38,7 +48,6 @@ module.exports = {
           maxJsonSize: parseInt(oldOptions.maxJsonSize || defaults.addons.maxJsonSize, 10)
         }
 
-        // Update to at least the new max value
         if (options.addons.maxJsonSize < defaults.addons.maxJsonSize) {
           options.addons.maxJsonSize = defaults.addons.maxJsonSize;
         }
@@ -60,4 +69,4 @@ module.exports = {
 
     return optionsStr;
   }
-}
+};

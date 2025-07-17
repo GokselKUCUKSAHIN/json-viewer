@@ -1,4 +1,4 @@
-var Promise = require('promise');
+var Promise = require('es6-promise').Promise;
 var jsonFormater = require('./jsl-format');
 var extractJSON = require('./extract-json');
 
@@ -26,7 +26,6 @@ function contentExtractor(pre, options) {
       var jsonParsed = JSON.parse(wrappedText);
       if (options.addons.sortKeys) jsonParsed = sortByKeys(jsonParsed);
 
-      // Validate and decode json
       var decodedJson = JSON.stringify(jsonParsed);
       decodedJson = decodedJson.replace(REPLACE_WRAP_REGEX, "$1");
 
@@ -64,10 +63,6 @@ function sortByKeys(obj) {
     return sorted;
 };
 
-// Pass all numbers to json parser as strings in order to maintain precision,
-// unwrap them later without quotes.
-//
-// Solution with some changes from https://github.com/alexlopashev
 function wrapNumbers(text) {
   var buffer = "";
   var numberBuffer = "";
@@ -101,7 +96,6 @@ function wrapNumbers(text) {
       numberBuffer = "";
     }
 
-    // this applies to the _next_ character - the one used in the next iteration
     charIsEscaped = (char == '\\') ? !charIsEscaped : false
 
     if (isInNumber) {

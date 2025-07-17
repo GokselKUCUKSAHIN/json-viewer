@@ -1,10 +1,5 @@
-/*jslint white: true, devel: true, onevar: true, browser: true, undef: true, nomen: true, regexp: true, plusplus: false, bitwise: true, newcap: true, maxerr: 50, indent: 4 */
 var jsl = typeof jsl === 'undefined' ? {} : jsl;
 
-/**
- * jsl.format - Provide json reformatting in a character-by-character approach, so that even invalid JSON may be reformatted (to the best of its ability).
- *
-**/
 jsl.format = (function () {
 
     function repeat(s, count) {

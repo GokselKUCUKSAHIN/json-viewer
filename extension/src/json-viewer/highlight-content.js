@@ -65,6 +65,7 @@ function prependHeader(options, outsideViewer, jsonText) {
 
 function highlightContent(pre, outsideViewer, ignoreLimit) {
   getOptions().then(function(options) {
+    
     if (!ignoreLimit && oversizedJSON(pre, options, outsideViewer)) {
       return pre.hidden = false;
     }
@@ -94,8 +95,6 @@ function highlightContent(pre, outsideViewer, ignoreLimit) {
           )
         }
 
-        // "awaysFold" was a typo but to avoid any problems I'll keep it
-        // a while
         if (options.addons.alwaysFold || options.addons.awaysFold) {
           highlighter.fold();
         }

@@ -3,11 +3,8 @@ function exposeJson(text, outsideViewer) {
 
   if (outsideViewer) {
     window.json = JSON.parse(text);
-
   } else {
-    var script = document.createElement("script") ;
-    script.innerHTML = 'window.json = ' + text + ';';
-    document.head.appendChild(script);
+    window.postMessage({ type: 'JSON_VIEWER_SET_JSON', json: text }, '*');
   }
 }
 
