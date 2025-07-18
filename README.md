@@ -38,8 +38,6 @@ Features:
 
 ## Installation
 
-### Install through Chrome Web Store
-
   1. It depends on node (version in `package.json` engines).
   2. `npm install`
   3. `npm run build`
